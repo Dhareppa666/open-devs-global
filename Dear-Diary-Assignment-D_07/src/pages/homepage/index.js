@@ -16,6 +16,7 @@ const Homepage = () => {
   const [selectedEntry, setSelectedEntry] = useState(null);
   const [loading, setLoading] = useState(false);
   const [entries, setEntries] = useState([]);
+  const [userSearchTag, setUserSearchTag] = useState("");
 
   const fetchEntries = () => {
     setLoading(true);
@@ -32,30 +33,43 @@ const Homepage = () => {
 
   const captureSearchTages = (event) => {
     setTimeout(() => {
-      console.log(event?.target?.value);
-    }, 3000);
-  }
+      const userSearchedTag = event?.target?.value;
+      console.log(userSearchedTag);
+      setUserSearchTag(userSearchedTag);
+    }, 1500);
+  };
 
   return (
     <>
       <Stack direction="column" spacing={2}>
         <Typography variant="h2">All Entries</Typography>
-        <TextField autoFocus id="outlined-basic" label="Search Tags" variant="outlined" style={{ maxWidth: '200px' }} onChange={captureSearchTages} />
+        <TextField
+          autoFocus
+          id="standard-basic"
+          label="Search Tags"
+          style={{ maxWidth: "200px" }}
+          onChange={captureSearchTages}
+        />
 
         {loading ? (
           <CircularProgress />
         ) : (
-          entries.map((entry) => (
-            <BriefEntry
-              title={entry.title}
-              tags={entry.tags}
-              createdAt={entry.createdAt}
-              onViewClick={() => {
-                setOpenModal(true);
-                setSelectedEntry(entry);
-              }}
-            />
-          ))
+          entries
+              .filter((entry) => {
+              const tags = entry.tags.split(',');
+              return tags.find((tag) => tag.startsWith(userSearchTag));
+            })
+            .map((entry) => (
+              <BriefEntry
+                title={entry.title}
+                tags={entry.tags}
+                createdAt={entry.createdAt}
+                onViewClick={() => {
+                  setOpenModal(true);
+                  setSelectedEntry(entry);
+                }}
+              />
+            ))
         )}
       </Stack>
       <Modal open={openModal}>
