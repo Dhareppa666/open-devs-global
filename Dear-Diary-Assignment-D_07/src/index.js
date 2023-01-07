@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './App';
+import { App } from './DearDairyApp';
 import 'react-quill/dist/quill.snow.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

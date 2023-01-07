@@ -5,7 +5,7 @@ import { Homepage } from "./pages/homepage"
 import { Create } from "./pages/create"
 import { useState } from "react"
 
-const App = () => {
+const DearDairyApp = () => {
   const [page, setPage] = useState('home')
 
   const renderPage = () => {
@@ -32,4 +32,4 @@ const App = () => {
   )
 }
 
-export { App }
+export { DearDairyApp as App }
